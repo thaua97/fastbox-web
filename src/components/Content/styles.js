@@ -5,7 +5,18 @@ const Container = styled.div`
   margin: 10px;
 `
 const Section = styled.section`
+    height: 100%;
+    width: 100%;
+    margin-left: 300px;
+    background: #fff fixed;
     display: flex;
-    flex-direction: ${ props => props.direction || 'column' };
+    flex-direction: column;
 `
-export { Container, Section }
+
+const Items = styled.div`
+    display: flex;
+    flex-direction: wrap;
+    justify-content: flex-start;
+    align-items: center;
+`
+export { Container, Section, Items }

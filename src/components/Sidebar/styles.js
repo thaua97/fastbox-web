@@ -4,13 +4,12 @@ const Background = styled.aside`
     min-height: 800px;
     max-height: 100%;
     width: 300px;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-    position: relative;
     top: 0;
     bottom: 0;
 `

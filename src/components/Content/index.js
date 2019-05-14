@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import { Container, Section } from './styles';
+import { Container, Section, Items } from './styles';
 
-export default class Content extends Component {
-  render() {
+export default function Content (props) {
     return (
-        <Container>
-            <Section></Section>
+      <Section>
+        <Container >
+          <Items direction='row wrap'>
+            { props.childrens }
+          </Items>
         </Container>
+      </Section>
     )
-  }
 }

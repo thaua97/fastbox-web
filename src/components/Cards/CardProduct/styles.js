@@ -1,16 +1,29 @@
 import styled from 'styled-components'
 
 const Card = styled.a`
+    cursor: pointer;
+    text-decoration: none;
+    width: 257px;
+    height: 200px;
+    margin: 10px;
     display: block;
-    height: 243px;
-    width: 287px;
-    background: #c3c3c3;
+    border-radius: 25px;
+    background: #ffffff;
+    
 `
-const CardImage = styled.img`
-    z-index: -1;
+const CardImage = styled.div`
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0, 0.4);
+    background-image: linear-gradient(45deg, #B131FF87, #B131FF97), url(${props => props.img || 'https://www.tecomat.com/uploads/Products/no-image.png'});
+    background-position: center;
+    background-repeat: no-repeat;
 `
 const CardTitle = styled.h1`
-    
+    font-weight: 300;
+    color: #fff;
 `
 
 export { Card, CardImage, CardTitle }
