@@ -5,6 +5,8 @@ import { App, Grid } from './styles.js'
 import Sidebar from '../../components/Sidebar'
 import Content from '../../components/Content'
 import CardProduct from  '../../components/Cards/CardProduct'
+import TextField from  '../../components/Inputs/TextField'
+import Toolbar from  '../../components/Toolbar'
 
 export default class Dashboard extends Component {
   render() {
@@ -13,7 +15,10 @@ export default class Dashboard extends Component {
         <Sidebar></Sidebar>
         <Content
           childrens={
+            <>
+            <Toolbar />
             <Grid>
+              <TextField title="Pesquisar"/>
               <CardProduct 
                 title="Teste 1"
                 url="/teste"
@@ -57,6 +62,7 @@ export default class Dashboard extends Component {
                 image="https://images.pexels.com/photos/2146573/pexels-photo-2146573.jpeg"
               />
             </Grid>
+            </>
           }
         />
       </App>

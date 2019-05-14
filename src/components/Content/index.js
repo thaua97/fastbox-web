@@ -1,12 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import { Container, Section, Items } from './styles';
+import { Container, Section, Items } from './styles'
+
 
 export default function Content (props) {
     return (
       <Section>
         <Container >
-          <Items direction='row wrap'>
+          <Items>
             { props.childrens }
           </Items>
         </Container>
