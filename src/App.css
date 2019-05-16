@@ -16,4 +16,5 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialiased !important;
+  text-decoration: none;
 }

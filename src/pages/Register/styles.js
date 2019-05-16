@@ -23,7 +23,7 @@ const Banner = styled.aside`
     justify-content: center;
     align-items: center;
     background: linear-gradient(45deg, #a011ff87, #ff8ce0d9), 
-    url('https://images.pexels.com/photos/761999/pexels-photo-761999.jpeg?cs=srgb&dl=beautiful-beauty-blond-761999.jpg&fm=jpg?dl&fit=crop&crop=entropy&w=1280&h=853') no-repeat center;
+    url('https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center;
     position: fixed;
 `
 const Content = styled.div`
@@ -79,16 +79,20 @@ const Button = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #ff8ce0;
-    color: #fff;
+    background: #fff;
+    color: #ff8ce0;
     border: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 25px;
+    transition: 0.25s;
 
-    
+    :hover {
+        background: #ff8ce0;
+        color: #fff;
+    }
 `
 
-const ButtonRegister = styled.button`
+const ButtonLogin = styled.button`
     width: 100%;
     height: 45px;
     margin-top: 20px;
@@ -96,11 +100,9 @@ const ButtonRegister = styled.button`
     justify-content: center;
     align-items: center;
     background: #fff;
-    color: #ff8ce0;
     border: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 25px;
-    cursor: pointer;
 `
 
-export { ButtonRegister, Button ,TextField, FormLogin, Subtitle, Title, Banner, Logo, Box, Content, Container }
+export { ButtonLogin, Button ,TextField, FormLogin, Subtitle, Title, Banner, Logo, Box, Content, Container }

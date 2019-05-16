@@ -1,9 +1,24 @@
-import React, { Component } from 'react';
-import { Button, TextField ,FormLogin, Subtitle, Title, Banner, Logo, Box, Content, Container } from './styles';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import api from '../../services/api'
+
+import {
+    ButtonRegister,
+    Button, 
+    TextField, 
+    FormLogin, 
+    Subtitle, 
+    Title, 
+    Banner, 
+    Logo, 
+    Box, 
+    Content, 
+    Container 
+} from './styles'
 
 import fblogo from '../../assets/fastbox.svg'
 
-import api from '../../services/api'
+
 
 export default class Login extends Component {
     state = {
@@ -30,7 +45,7 @@ export default class Login extends Component {
     handlePasswordChange = (e) => {
         this.setState({ password: e.target.value })
     }
-
+    
   render() {
     return (
         <Box>
@@ -57,7 +72,11 @@ export default class Login extends Component {
                                 value={this.state.password}
                                 onChange={this.handlePasswordChange}
                             />
-                            <Button type="submit">ACESSAR</Button>
+                            <Button type="submit">Acessar</Button>
+                            <p style={{ marginTop: '20px', color: '#a3a3a3' }}>Ou</p>
+                            <Link to="/register" style={{ cursor: 'pointer', textDecoration: 'none', width: '100%' }}>
+                                <ButtonRegister>Registrar</ButtonRegister>
+                            </Link>
                         </FormLogin>
                     </Box>
                 </Container>
