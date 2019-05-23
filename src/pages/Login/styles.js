@@ -73,6 +73,7 @@ const TextField = styled.input`
 `
 
 const Button = styled.button`
+    cursor: pointer;
     width: 100%;
     height: 45px;
     margin-top: 20px;

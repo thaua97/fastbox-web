@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import api from '../../services/api'
 
 import {
     ButtonRegister,
@@ -18,23 +17,16 @@ import {
 
 import fblogo from '../../assets/fastbox.svg'
 
-
-
 export default class Login extends Component {
     state = {
         email: '',
         password: ''
     }
 
-    handleLogin = async e => {
+    handleLogin =  (e) => {
         e.preventDefault()
-        
-        const response = await api.post('/auth', {
-            email: this.state.email,
-            password: this.state.password
-        })
 
-        this.props.history.push(`/box/${response.data._id}`)
+        this.props.history.push(`/`)
     
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import api from '../../services/api'
+
 
 import { 
     Button, 
@@ -25,15 +25,10 @@ export default class Register extends Component {
         confirmPassword: ''
     }
 
-    handleLogin = async e => {
+    handleLogin =  (e) => {
         e.preventDefault()
-        
-        const response = await api.post('/auth', {
-            email: this.state.email,
-            password: this.state.password
-        })
 
-        this.props.history.push(`/box/${response.data._id}`)
+        this.props.history.push(`/`)
     
     }
 
