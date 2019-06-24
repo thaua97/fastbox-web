@@ -8,7 +8,7 @@ export default function Content (props) {
       <Section>
         <Container >
           <Items>
-            { props.childrens }
+            { props.children }
           </Items>
         </Container>
       </Section>

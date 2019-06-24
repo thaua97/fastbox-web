@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
     padding: 90px;
@@ -92,7 +93,7 @@ const Button = styled.button`
     }
 `
 
-const ButtonLogin = styled.button`
+const ButtonLogin = styled(Link)`
     width: 100%;
     height: 45px;
     margin-top: 20px;
@@ -101,6 +102,9 @@ const ButtonLogin = styled.button`
     align-items: center;
     background: #fff;
     border: none;
+    text-decoration: none;
+    font-size: 1rem;
+    color: #ff8ce0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 25px;
 `

@@ -31,24 +31,24 @@ export default class Sidebar extends Component {
                     </UserHeader>
                     <List>
                         <ListTitle>Utilitarios</ListTitle>
-                        <ListItem>
+                        <ListItem to="/comprar">
                             <MdShoppingCart color={'#B131FF'} size={24}/>
                             <ListItemTitle>Comprar</ListItemTitle>
                         </ListItem>
-                        <ListItem>
+                        <ListItem to="/vender">
                             <MdAttachMoney size={24} />
                             <ListItemTitle>Vender</ListItemTitle>
                         </ListItem>
                         <ListTitle>Minha Empresa</ListTitle>
-                        <ListItem onClick="">
+                        <ListItem to="/admin/perfil">
                             <MdDomain color={'#B131FF'} size={24}/>
                             <ListItemTitle>Perfil</ListItemTitle>
                         </ListItem>
-                        <ListItem>
+                        <ListItem to="/admin/usuarios">
                             <MdGroup size={24} />
                             <ListItemTitle>Usuarios</ListItemTitle>
                         </ListItem>
-                        <ListItem>
+                        <ListItem to="/admin/pedidos">
                             <MdShoppingBasket size={24} />
                             <ListItemTitle>Pedidos</ListItemTitle>
                         </ListItem>

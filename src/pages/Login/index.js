@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import api from '../../services/api'
+import { login, setUser } from '../../services/auth'
+import { decode } from 'jsonwebtoken'
 
 import {
     ButtonRegister,
@@ -15,19 +18,17 @@ import {
     Container 
 } from './styles'
 
+import Snackbar from '../../components/Snackbar'
+
 import fblogo from '../../assets/fastbox.svg'
 
-export default class Login extends Component {
+class Login extends Component {
     state = {
         email: '',
-        password: ''
-    }
-
-    handleLogin =  (e) => {
-        e.preventDefault()
-
-        this.props.history.push(`/`)
-    
+        password: '',
+        open: false,
+        status: '',
+        msg: ''
     }
 
     handleEmailChange = (e) => {
@@ -38,6 +39,41 @@ export default class Login extends Component {
         this.setState({ password: e.target.value })
     }
     
+    handleLogin = async (e) => {
+        e.preventDefault()
+        const { email, password } = this.state
+        if(!email || !password) {
+            this.setState({ 
+                open: true,
+                status: 'warning',
+                msg: "Preecha e-mail e senha para continuar!"
+            })
+        } else {
+            try {
+                const res = await api.post('/signin', { email, password})
+                login(res.data.token)
+                
+                const token = localStorage.getItem('@fastbox-Token')
+                const dc = decode(token)
+                const { uid } = dc
+                const payload = await api.get(`/user/${uid}`)
+                const user = payload.data 
+                setUser(user)
+                
+                this.props.history.push('/')
+                
+            } catch (err) {
+                this.setState({
+                    open: true,
+                    status: 'error',
+                    msg: 'Houve um problema com o login, verifique suas credenciais. T.T'  
+                })
+                console.log(err)
+            }
+        }
+    }
+
+
   render() {
     return (
         <Box>
@@ -55,25 +91,29 @@ export default class Login extends Component {
                             <TextField 
                                 placeholder="E-mail"
                                 type="email"
-                                value={this.state.email}
                                 onChange={this.handleEmailChange}
                             />
                             <TextField 
                                 placeholder="Senha"
                                 type="password"
-                                value={this.state.password}
                                 onChange={this.handlePasswordChange}
                             />
                             <Button type="submit">Acessar</Button>
-                            <p style={{ marginTop: '20px', color: '#a3a3a3' }}>Ou</p>
-                            <Link to="/register" style={{ cursor: 'pointer', textDecoration: 'none', width: '100%' }}>
-                                <ButtonRegister>Registrar</ButtonRegister>
-                            </Link>
+                            <p>Ou</p>
+                            <ButtonRegister to="/register">Registrar</ButtonRegister>
                         </FormLogin>
                     </Box>
+                    <Snackbar 
+                        open={this.state.open}
+                        close={ () => this.setState({ open: false })}
+                        msg={this.state.msg} 
+                        status={this.state.status}
+                    />
                 </Container>
             </Content>
         </Box>
     )
   }
 }
+
+export default withRouter(Login)

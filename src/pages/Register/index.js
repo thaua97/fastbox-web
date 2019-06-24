@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-
+import api from '../../services/api'
 
 import { 
-    Button, 
+    Button,
+    ButtonLogin, 
     TextField ,
     FormLogin, 
     Subtitle, 
@@ -15,6 +15,8 @@ import {
     Container 
 } from './styles'
 
+import Snackbar from '../../components/Snackbar'
+
 import fblogo from '../../assets/fastbox.svg'
 
 export default class Register extends Component {
@@ -22,31 +24,61 @@ export default class Register extends Component {
         usarname: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        error: '',
+        open: false,
+        status: '',
+        msg: ''
     }
 
-    handleLogin =  (e) => {
-        e.preventDefault()
-
-        this.props.history.push(`/`)
-    
-    }
-
-    handleUsernameChange = (e) => {
+    handleUsernameChange = e => {
         this.setState({ username: e.target.value })
     }
 
-    handleEmailChange = (e) => {
+    handleEmailChange = e => {
         this.setState({ email: e.target.value })
     }
 
-    handlePasswordChange = (e) => {
+    handlePasswordChange = e => {
         this.setState({ password: e.target.value })
     }
 
-    handleConfirmPasswordChange = (e) => {
-        this.setState({ confirmPassword: e.target.value })
+    handleRegister = async e => {
+        e.preventDefault()
+        const { username, email, password } = this.state
+
+        if (!username || !email || !password){
+            this.setState({
+                open: true, 
+                status: 'warning', 
+                msg: "Preencha todos os campos para continuar!"
+            })
+        } else {
+            try {
+                const res = await api.post('/signup', {
+                    username, 
+                    email, 
+                    password
+                })
+
+                if(res.data) {
+                    this.setState({
+                        open: true, 
+                        status: 'success', 
+                        msg: "Adiocioando com sucesso!"
+                    })
+                    this.props.history.push('/login')
+                }
+
+            } catch(error) {
+                this.setState({
+                    open: true, 
+                    status: 'error', 
+                    msg: `${error}`
+                })
+            }   
+        }
     }
+
     render() {
         return (
             <Box>
@@ -60,7 +92,7 @@ export default class Register extends Component {
                         <Box direction="column">
                             <Title>FastBox</Title>
                             <Subtitle>Sua necessidade nossa prioridade</Subtitle>
-                            <FormLogin onSubmit={this.handleLogin}>
+                            <FormLogin onSubmit={this.handleRegister}>
                                 <TextField 
                                     placeholder="Nome de Usuário"
                                     type="text"
@@ -79,15 +111,15 @@ export default class Register extends Component {
                                     value={this.state.password}
                                     onChange={this.handlePasswordChange}
                                 />
-                                <TextField 
-                                    placeholder="Confirmar Senha"
-                                    type="password"
-                                    value={this.state.confirmPassword}
-                                    onChange={this.handleConfirmPasswordChange}
-                                />
                                 <Button type="submit">registrar</Button>
-                                <Link to="/login" style={{ textDecoration: 'none', marginTop: '15px', fontSize: '1rem', color: '#ff8ce0' }}>Já possui conta!</Link>
+                                <ButtonLogin to="/login">Já possui conta!</ButtonLogin>
                             </FormLogin>
+                            <Snackbar 
+                                open={this.state.open}
+                                close={ () => this.setState({ open: false })}
+                                msg={this.state.msg} 
+                                status={this.state.status}
+                            />
                         </Box>
                     </Container>
                 </Content>

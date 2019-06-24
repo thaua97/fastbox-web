@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Background = styled.aside`
     min-height: 800px;
@@ -68,13 +69,14 @@ const ListTitle = styled.h4`
     font-weight: 300;
     font-family: 'Nunito Sans', sans-serif;
 `
-const ListItem = styled.li`
+const ListItem = styled(Link)`
     width: 300px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     color: #B131FF;
+    text-decoration: none;
     padding: 10px 20px;
     transition: 0.2s;
     cursor: pointer;

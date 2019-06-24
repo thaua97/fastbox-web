@@ -1,17 +1,20 @@
 import React from 'react';
 
-import { Card, CardImage, CardTitle } from './styles'
-import { Link } from 'react-router-dom'
+import { Card, CardImage, CardInfo, CardTitle, Text, Btn } from './styles'
+import { MdVisibility } from 'react-icons/md'
 
 const CardProduct = (props) => (
-    
-        <Card>
-            <Link style={{ textDecoration: 'none' }} to={props.url}>
-                <CardImage img={props.image} alt="img">
-                    <CardTitle>{props.title}</CardTitle>
-                </CardImage>
-            </Link>
-        </Card>
+    <Card to={props.url}>  
+        <CardImage src={props.image} alt="img"/>
+        <CardInfo>
+            <CardTitle>
+                <Text size={36}>{props.text}</Text>
+                <Btn to={`/produtos/${props.url}`}>
+                    <MdVisibility size={40} />
+                </Btn>
+            </CardTitle>
+        </CardInfo>
+    </Card>
     
 )
 

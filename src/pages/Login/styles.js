@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
     padding: 90px;
@@ -47,6 +48,11 @@ const FormLogin = styled.form`
     justify-content: center;
     align-items: center;
     width: 375px;
+
+    p {
+        margin-top: 20px; 
+        color: #a3a3a3;
+    }
 `
 
 const TextField = styled.input`
@@ -89,7 +95,7 @@ const Button = styled.button`
     
 `
 
-const ButtonRegister = styled.button`
+const ButtonRegister = styled(Link)`
     width: 100%;
     height: 45px;
     margin-top: 20px;
@@ -98,6 +104,7 @@ const ButtonRegister = styled.button`
     align-items: center;
     background: #fff;
     color: #ff8ce0;
+    text-decoration: none;
     border: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 25px;

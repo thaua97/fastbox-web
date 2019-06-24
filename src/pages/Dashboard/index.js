@@ -1,71 +1,38 @@
-import React, { Component } from 'react';
-import { App, Grid } from './styles.js'
+import React, { useState, useEffect} from 'react';
 
-/** Components */
-import Sidebar from '../../components/Sidebar'
-import Content from '../../components/Content'
+import Main from '../../templates/Main'
 import CardProduct from  '../../components/Cards/CardProduct'
 import TextField from  '../../components/Inputs/TextField'
-import Toolbar from  '../../components/Toolbar'
 
-export default class Dashboard extends Component {
-  render() {
+
+export default function Dashboard() {
+    const { product, setProduct } = useState({})
+
+    useEffect(() => {
+      const products = [
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "http://limpamaiscampinas.com.br/wp-content/uploads/2015/11/higienico-ROLAO.png"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
+      ]
+      setProduct(products)
+    }, [])
+
     return (
-      <App>
-        <Sidebar></Sidebar>
-        <Content
-          childrens={
-            <>
-            <Toolbar />
-            <Grid>
-              <TextField title="Pesquisar"/>
+      <Main>
+          <TextField title="Pesquisar"/>
+          {product && product.map( product => (
               <CardProduct 
-                title="Teste 1"
-                url="/teste"
-                image="https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"
+                text={product.text}
+                url={product.url}
+                image={product.image}
               />
-              <CardProduct 
-                title="teste 2"
-                url="/login"
-                image="http://limpamaiscampinas.com.br/wp-content/uploads/2015/11/higienico-ROLAO.png"
-              />
-               <CardProduct 
-                title="Teste 1"
-                url="/login"
-                image="https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"
-              />
-              <CardProduct 
-                title="teste 2"
-                image="https://images.pexels.com/photos/2146573/pexels-photo-2146573.jpeg"
-              />
-              <CardProduct 
-                title="teste 2"
-                url="/teste2"
-                image="https://images.pexels.com/photos/2146573/pexels-photo-2146573.jpeg"
-              />
-              <CardProduct 
-                title="teste 2"
-                url=""
-              />
-              <CardProduct 
-                title="teste 2"
-                
-              />
-              <CardProduct 
-                title="teste 2"
-                url="/teste2"
-                image="https://images.pexels.com/photos/2146573/pexels-photo-2146573.jpeg"
-              />
-              <CardProduct 
-                title="teste 2"
-                url=""
-                image="https://images.pexels.com/photos/2146573/pexels-photo-2146573.jpeg"
-              />
-            </Grid>
-            </>
-          }
-        />
-      </App>
+          ))}
+      </Main>
     )
-  }
 }
