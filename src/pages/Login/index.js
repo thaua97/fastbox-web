@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import api from '../../services/api'
 import { login, setUser } from '../../services/auth'
@@ -22,32 +22,29 @@ import Snackbar from '../../components/Snackbar'
 
 import fblogo from '../../assets/fastbox.svg'
 
-class Login extends Component {
-    state = {
-        email: '',
-        password: '',
-        open: false,
-        status: '',
-        msg: ''
+function Login(){
+    
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ open, setOpen ] = useState(false)
+    const [ status, setStatus ] = useState('')
+    const [ msg, setMsg ] = useState('')
+    
+
+    function handleEmailChange(e){
+        setEmail(e.target.value)
     }
 
-    handleEmailChange = (e) => {
-        this.setState({ email: e.target.value })
-    }
-
-    handlePasswordChange = (e) => {
-        this.setState({ password: e.target.value })
+    function handlePasswordChange(e){
+        setPassword(e.target.value)
     }
     
-    handleLogin = async (e) => {
+    async function handleLogin(e){
         e.preventDefault()
-        const { email, password } = this.state
         if(!email || !password) {
-            this.setState({ 
-                open: true,
-                status: 'warning',
-                msg: "Preecha e-mail e senha para continuar!"
-            })
+            setOpen(true)
+            setStatus("warning")
+            setMsg("Preecha e-mail e senha para continuar!")
         } else {
             try {
                 const res = await api.post('/signin', { email, password})
@@ -63,18 +60,14 @@ class Login extends Component {
                 this.props.history.push('/')
                 
             } catch (err) {
-                this.setState({
-                    open: true,
-                    status: 'error',
-                    msg: 'Houve um problema com o login, verifique suas credenciais. T.T'  
-                })
+                setOpen(true)
+                setStatus("error")
+                setMsg("Houve um problema com o login, verifique suas credenciais!")
                 console.log(err)
             }
         }
     }
 
-
-  render() {
     return (
         <Box>
             <Banner>
@@ -87,16 +80,16 @@ class Login extends Component {
                     <Box direction="column">
                         <Title>FastBox</Title>
                         <Subtitle>Sua necessidade nossa prioridade</Subtitle>
-                        <FormLogin onSubmit={this.handleLogin}>
+                        <FormLogin onSubmit={handleLogin}>
                             <TextField 
                                 placeholder="E-mail"
                                 type="email"
-                                onChange={this.handleEmailChange}
+                                onChange={handleEmailChange}
                             />
                             <TextField 
                                 placeholder="Senha"
                                 type="password"
-                                onChange={this.handlePasswordChange}
+                                onChange={handlePasswordChange}
                             />
                             <Button type="submit">Acessar</Button>
                             <p>Ou</p>
@@ -104,16 +97,15 @@ class Login extends Component {
                         </FormLogin>
                     </Box>
                     <Snackbar 
-                        open={this.state.open}
-                        close={ () => this.setState({ open: false })}
-                        msg={this.state.msg} 
-                        status={this.state.status}
+                        open={open}
+                        close={ () => setOpen(false)}
+                        msg={msg} 
+                        status={status}
                     />
                 </Container>
             </Content>
         </Box>
     )
-  }
 }
 
 export default withRouter(Login)
