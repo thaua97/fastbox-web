@@ -9,6 +9,5 @@ export const setUser = user => {
     localStorage.setItem(USER_AUTH, JSON.stringify(user))
 }
 export const logout = () => {
-    localStorage.removeItem(TOKEN_KEY)
-    localStorage.removeItem(USER_AUTH)
+    localStorage.clear()
 }

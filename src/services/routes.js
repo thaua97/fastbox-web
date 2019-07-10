@@ -22,11 +22,11 @@ const PrivateRoute = ({ component: Component, ...rest}) => (
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            <Route exact path='/' component={Dashboard}/>
             <Route path='/login' component={Login}/>
             <Route path='/register' component={Register}/>
-            <Route path='/vender' component={Sale}/>
-            <Route path='/produtos/:category' component={Category}/>
+            <PrivateRoute exact path='/' component={Dashboard}/>
+            <PrivateRoute path='/vender' component={Sale}/>
+            <PrivateRoute path='/produtos/:category' component={Category}/>
         </Switch>
     </BrowserRouter>
 )

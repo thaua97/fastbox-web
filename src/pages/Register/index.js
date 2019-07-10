@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import api from '../../services/api'
 
 import { 
@@ -19,67 +20,66 @@ import Snackbar from '../../components/Snackbar'
 
 import fblogo from '../../assets/fastbox.svg'
 
-export default class Register extends Component {
-    state = {
-        usarname: '',
-        email: '',
-        password: '',
-        error: '',
-        open: false,
-        status: '',
-        msg: ''
+function Register (props) {
+    const [ username, setUsername ] = useState('')
+    const [ email, setEmail ] = useState('')
+    const [ password, setPassword ] = useState('')
+    const [ open, setOpen ] = useState(false)
+    const [ status, setStatus ] = useState('')
+    const [ msg, setMsg ] = useState('')
+
+    function handleUsernameChange(e){
+        setUsername(e.target.value)
     }
 
-    handleUsernameChange = e => {
-        this.setState({ username: e.target.value })
+    function handleEmailChange(e) {
+        setEmail(e.target.value)
     }
 
-    handleEmailChange = e => {
-        this.setState({ email: e.target.value })
+    function handlePasswordChange(e){
+        setPassword(e.target.value)
     }
 
-    handlePasswordChange = e => {
-        this.setState({ password: e.target.value })
-    }
-
-    handleRegister = async e => {
+   async function handleRegister(e) {
         e.preventDefault()
-        const { username, email, password } = this.state
-
-        if (!username || !email || !password){
-            this.setState({
-                open: true, 
-                status: 'warning', 
-                msg: "Preencha todos os campos para continuar!"
-            })
+        
+        if(!username && !email && !password) {
+            setStatus('warning')
+            setMsg('Preecha todas as informações para continuar!')
+            setOpen(true)
+        } else if(!email) {
+            setStatus('warning')
+            setMsg('Preecha o e-mail para continuar!')
+            setOpen(true)
+        } else if(!password) {
+            setStatus('warning')
+            setMsg('Preecha a senha para continuar!')
+            setOpen(true)
+        } else if(!username){
+            setStatus('warning')
+            setMsg('Preecha o nome do usuario para continuar!')
+            setOpen(true)
         } else {
             try {
                 const res = await api.post('/signup', {
-                    username, 
-                    email, 
-                    password
+                    username: username, 
+                    email: email, 
+                    password: password
                 })
 
                 if(res.data) {
-                    this.setState({
-                        open: true, 
-                        status: 'success', 
-                        msg: "Adiocioando com sucesso!"
-                    })
-                    this.props.history.push('/login')
+                    setStatus('success')
+                    setMsg('Preencha todos os campos para continuar!')
+                    setOpen(true)
                 }
 
             } catch(error) {
-                this.setState({
-                    open: true, 
-                    status: 'error', 
-                    msg: `${error}`
-                })
+                setStatus('danger')
+                setMsg('Preencha todos os campos para continuar!')
+                setOpen(true)
             }   
         }
     }
-
-    render() {
         return (
             <Box>
                 <Banner>
@@ -92,38 +92,36 @@ export default class Register extends Component {
                         <Box direction="column">
                             <Title>FastBox</Title>
                             <Subtitle>Sua necessidade nossa prioridade</Subtitle>
-                            <FormLogin onSubmit={this.handleRegister}>
+                            <FormLogin onSubmit={handleRegister}>
                                 <TextField 
                                     placeholder="Nome de Usuário"
                                     type="text"
-                                    value={this.state.username}
-                                    onChange={this.handleUsernameChange}
+                                    onChange={handleUsernameChange}
                                 />
                                 <TextField 
                                     placeholder="E-mail"
                                     type="email"
-                                    value={this.state.email}
-                                    onChange={this.handleEmailChange}
+                                    onChange={handleEmailChange}
                                 />
                                 <TextField 
                                     placeholder="Senha"
                                     type="password"
-                                    value={this.state.password}
-                                    onChange={this.handlePasswordChange}
+                                    onChange={handlePasswordChange}
                                 />
                                 <Button type="submit">registrar</Button>
                                 <ButtonLogin to="/login">Já possui conta!</ButtonLogin>
                             </FormLogin>
                             <Snackbar 
-                                open={this.state.open}
-                                close={ () => this.setState({ open: false })}
-                                msg={this.state.msg} 
-                                status={this.state.status}
+                                open={open}
+                                close={ () => setOpen(false)}
+                                msg={msg} 
+                                status={status}
                             />
                         </Box>
                     </Container>
                 </Content>
             </Box>
         )
-    }
 }
+
+export default withRouter(Register)

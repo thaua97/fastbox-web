@@ -84,7 +84,7 @@ export default function CustomizedSnackbars(props) {
     <div>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'right',
         }}
         open={props.open}

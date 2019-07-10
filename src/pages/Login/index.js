@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import api from '../../services/api'
 import { login, setUser } from '../../services/auth'
-import { decode } from 'jsonwebtoken'
 
 import {
     ButtonRegister,
@@ -22,7 +21,7 @@ import Snackbar from '../../components/Snackbar'
 
 import fblogo from '../../assets/fastbox.svg'
 
-function Login(){
+function Login(props){
     
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
@@ -41,28 +40,35 @@ function Login(){
     
     async function handleLogin(e){
         e.preventDefault()
-        if(!email || !password) {
+        if(!email && !password) {
+            setStatus('warning')
+            setMsg('Preecha o e-mail e senha para continuar!')
             setOpen(true)
-            setStatus("warning")
-            setMsg("Preecha e-mail e senha para continuar!")
+        } else if(!email) {
+            setStatus('warning')
+            setMsg('Preecha o e-mail para continuar!')
+            setOpen(true)
+        } else if(!password) {
+            setStatus('warning')
+            setMsg('Preecha a senha para continuar!')
+            setOpen(true)
         } else {
             try {
-                const res = await api.post('/signin', { email, password})
-                login(res.data.token)
+                const res = await api.post('/signin', { 
+                    email: email, 
+                    password: password
+                })
+                login(res.data.token.token)
+                setUser(res.data.user)
                 
-                const token = localStorage.getItem('@fastbox-Token')
-                const dc = decode(token)
-                const { uid } = dc
-                const payload = await api.get(`/user/${uid}`)
-                const user = payload.data 
-                setUser(user)
-                
-                this.props.history.push('/')
+                props.history.push('/')
                 
             } catch (err) {
+                
+                setStatus('danger')
+                setMsg('Preecha e-mail e senha para continuar!')
                 setOpen(true)
-                setStatus("error")
-                setMsg("Houve um problema com o login, verifique suas credenciais!")
+                
                 console.log(err)
             }
         }
