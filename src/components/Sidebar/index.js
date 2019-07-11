@@ -36,17 +36,20 @@ function Sidebar (props) {
     return (
         <Background>
             <Content>
-                {user && image !== null ?
                     <UserHeader>
-                        <UserImage src={user.images.url || 'https://www.trzcacak.rs/myfile/full/65-650485_login-user-default-user-image-png.png' } alt="avatar"/>
+                        <UserImage 
+                            src={
+                                user.images !== null 
+                                ? user.images && user.images.url 
+                                : 'https://www.trzcacak.rs/myfile/full/65-650485_login-user-default-user-image-png.png'
+                            }    
+                            alt="avatar"
+                        />
                         <UserInfo>
-                            <UserName>{user.username}</UserName>
+                            <UserName>{user.username || 'Nome do Usúario'}</UserName>
                             <UserJob>{user.companies || 'Sem empresa'}</UserJob>
                         </UserInfo>
                     </UserHeader>
-                    :
-                    ''
-                }
                 <List>
                     <ListTitle>Utilitarios</ListTitle>
                     <ListItem to="/comprar">
