@@ -1,35 +1,60 @@
 import React, { useState, useEffect } from 'react'
+import api from '../../services/api'
+import styled from 'styled-components'
 
 import Main from '../../templates/Main'
-import ItemsList from '../../components/List/ItemsList'
+import CardProductList from '../../components/Cards/CardProductList'
+import Grid from '@material-ui/core/Grid'
+import { Typography } from '@material-ui/core'
+
+const ListContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+`
+const List = styled.div`
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`
 
 function Category(props) {
     const [ title, setTitle ] = useState('')
     const [ product, setProduct ] = useState([])
 
     useEffect(() => {
-        setProduct([
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "http://limpamaiscampinas.com.br/wp-content/uploads/2015/11/higienico-ROLAO.png"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-          { text: "Teste 1", url: "teste", img: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"}
-        ])
-    }, [])
+        async function getCat () {
+            try {
+                const res = await api.get(`/categories/${props.match.params.category}`)
+                setProduct(res.data.products)
+                setTitle(res.data.name)
+            } catch (err) {
 
-    useEffect(() => {
-        const tlt = props.match.params.category
-        setTitle(tlt)
-    }, [title])
+            }
+        }
+        getCat()
+    })
 
     return (
         <Main>
-            <p>{title}</p>
-            <ItemsList data={product}/>
+            <ListContainer>
+                <List>
+                    <Typography variant="h5">{title}</Typography>
+                </List>
+                <Grid container spacing={2}>
+                    {product && product.map( product => (
+                        <Grid key={product.id} item xs={6}>
+                            <CardProductList
+                                title={product.title}
+                                description={product.description}
+                            />
+                        </Grid>    
+                    ))}
+                </Grid>
+            </ListContainer>
         </Main>
     )
 }

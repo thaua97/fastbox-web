@@ -36,9 +36,9 @@ function ItemsList(props) {
         </GridListTile>
         {props.data.map(tile => (
           <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+            <img src={tile.img || 'https://utmsi.utexas.edu/components/com_easyblog/themes/wireframe/images/placeholder-image.png'} alt={tile.title} />
             <GridListTileBar
-              title={tile.text}
+              title={tile.name}
               subtitle={<span>distribuidor: {tile.url}</span>}
               actionIcon={
                 <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>

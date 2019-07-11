@@ -1,35 +1,29 @@
-import React, { useState, useEffect} from 'react';
-
+import React, { useState, useEffect} from 'react'
+import api from '../../services/api'
 import Main from '../../templates/Main'
 import CardProduct from  '../../components/Cards/CardProduct'
 import TextField from  '../../components/Inputs/TextField'
 
 
 export default function Dashboard() {
-    const [ item, setItem ] = useState([])
+    const [ category, setCategory ] = useState(null)
     
     useEffect(() => {
-      setItem([
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "http://limpamaiscampinas.com.br/wp-content/uploads/2015/11/higienico-ROLAO.png"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"},
-        { text: "Teste 1", url: "teste", image: "https://i0.wp.com/derivandoleite.com.br/conteudo/uploads/2018/04/cropped-caixa-de-leite.png?resize=300%2C300&ssl=1"}
-      ])
-    })
-    return (
-      
+      async function getCat() {
+        const res = await api.get(`/categories`)
+        setCategory(res.data)
+      }
+      getCat()
+    }, [])
+    
+    return (  
       <Main>
           <TextField title="Pesquisar"/>
-          {item && item.map( product => (
+          {category && category.map( cat => (
               <CardProduct 
-                text={product.text}
-                url={product.url}
-                image={product.image}
+                text={cat.name}
+                url={cat.id}
+                image={cat.images && cat.images.url || 'https://utmsi.utexas.edu/components/com_easyblog/themes/wireframe/images/placeholder-image.png'}
               />
           ))
           

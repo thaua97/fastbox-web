@@ -19,7 +19,7 @@ import  { MdShoppingCart, MdAttachMoney, MdDomain, MdGroup, MdShoppingBasket, Md
 
 function Sidebar (props) {
     const [ user, setUser ] = useState({ })
-    const [ image, setImage ] = useState(null)
+    const [ img, setImg ] = useState(null)
 
     useEffect(
         () => {
@@ -30,17 +30,18 @@ function Sidebar (props) {
     )
 
     useEffect(() => {
-        setImage(user.images)
+        setImg(user.images)
     }, [user.images])
-    
+
     return (
         <Background>
             <Content>
                     <UserHeader>
                         <UserImage 
                             src={
+                                
                                 user.images !== null 
-                                ? user.images && user.images.url 
+                                ? user.images && user.images.url
                                 : 'https://www.trzcacak.rs/myfile/full/65-650485_login-user-default-user-image-png.png'
                             }    
                             alt="avatar"
